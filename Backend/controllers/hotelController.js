@@ -48,6 +48,7 @@ export const registerHotel = async (req, res) => {
     const savedHotel = await newHotel.save();
 
     const hotelResponse = _.pick(savedHotel, [
+      "_id",
       "name",
       "location",
       "roomsAvailable",
@@ -71,7 +72,13 @@ export const getAllHotels = async (req, res) => {
 
     // Use Lodash to pick only the desired fields from each hotel
     const hotelsResponse = hotels.map((hotel) =>
-      _.pick(hotel, ["name", "location", "roomsAvailable", "pricePerNight"])
+      _.pick(hotel, [
+        "_id",
+        "name",
+        "location",
+        "roomsAvailable",
+        "pricePerNight",
+      ])
     );
 
     res
@@ -94,6 +101,7 @@ export const getHotelById = async (req, res) => {
     }
 
     const hotelResponse = _.pick(hotel, [
+      "_id",
       "name",
       "location",
       "roomsAvailable",
@@ -135,6 +143,7 @@ export const updateHotelById = async (req, res) => {
     }
 
     const hotelResponse = _.pick(updatedHotel, [
+      "_id",
       "name",
       "location",
       "roomsAvailable",
@@ -180,7 +189,13 @@ export const findHotelByName = async (req, res) => {
 
     // Use Lodash to pick only the desired fields from each hotel
     const hotelsResponse = hotels.map((hotel) =>
-      _.pick(hotel, ["name", "location", "roomsAvailable", "pricePerNight"])
+      _.pick(hotel, [
+        "_id",
+        "name",
+        "location",
+        "roomsAvailable",
+        "pricePerNight",
+      ])
     );
 
     if (hotelsResponse.length === 0) {

@@ -127,4 +127,25 @@ const login = async (req, res) => {
   }
 };
 
-export { register, login };
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+
+    const userResponse = users.map((user) =>
+      _.pick(user, ["_id", "name", "role"])
+    );
+
+    // Send response
+    res.status(200).json({
+      "Users Count": userResponse.length,
+      userResponse,
+    });
+  } catch (error) {
+    // Handle errors
+    res
+      .status(500)
+      .json({ message: "An error occurred", error: error.message });
+  }
+};
+
+export { register, login, getAllUsers };
