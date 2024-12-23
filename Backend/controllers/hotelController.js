@@ -177,7 +177,7 @@ export const deleteHotelById = async (req, res) => {
 
 // Function to find a hotel by name
 export const findHotelByName = async (req, res) => {
-  const { name } = req.query; // Get the hotel name from query parameters
+  const name = req.body.name;
 
   try {
     // Ensure name is provided

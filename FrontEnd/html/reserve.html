@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Open+Sans:wght@400;700&family=Roboto:wght@100;300;500&family=Work+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
       .btn-primary {
           background: transparent;
@@ -71,132 +72,76 @@
         <div class="container">
             <form class="form-group">
                 <div id="form-container">
-                    <h1 class="text-white text-center">ROOM RESERVATION</h1>
+                    <h1 class="text-white text-center">BOOKING HOTLE</h1>
     
                     <div class="form-group">
+                      
+    
                         <div class="input-group">
                             <i class="fa fa-user p-2" aria-hidden="true" style="color: red;"></i>
-                            <input type="text" class="" placeholder="Name">
+                            <input type="text" class="input" placeholder="User Id" id="userId">
                         </div>
     
-                        <div class="input-group">
-                            <i class="fa fa-phone p-2" aria-hidden="true" style="color: red;"></i>
-                            <input type="number" class="input" placeholder="Phone Number">
-                        </div>
-    
-                        <div class="input-group">
-                            <i class="fa fa-calendar p-2" aria-hidden="true" style="color: red;"></i>
-                            <input type="text" class="input" placeholder="Arrival Date" onfocus="(this.type='Date')">
-                        </div>
-    
-                        <div class="input-group">
-                            <i class="fa fa-users p-2" style="color: red" aria-hidden="true"></i>
-                            <select class="input" aria-hidden="true">
-                                <option value="">No.Of Guests</option>
-                                <option value="">1-3</option>
-                                <option value="">4-7</option>
-                                <option value="">7-10</option>
-                            </select>
-                        </div>
                     </div>
     
                     <div class="form-group">
-                        <div class="input-group">
-                            <i class="fa fa-user p-2" aria-hidden="true" style="color: red;"></i>
-                            <input type="text" class="input" placeholder="National ID">
-                        </div>
-    
-                        <div class="input-group">
-                          <i class="fa-solid fa-envelope p-2" style="color: red"></i>
-                            <input type="email" class="input" placeholder="Email">
-                        </div>
+
     
                         <div class="input-group">
                             <i class="fa fa-calendar p-2" aria-hidden="true" style="color: red;"></i>
-                            <input type="text" class="input" placeholder="Departure Date" onfocus="(this.type='Date')"">
+                            <input type="text" class="input" id="checkIn"  placeholder="checkInDate" onfocus="(this.type='Date')"">
                         </div>
-    
                         <div class="input-group">
-                            <i class="fa fa-users p-2" aria-hidden="true" style="color: red"></i>
-                            <select class="input" aria-hidden="true">
-                                <option value="">Room Type</option>
-                                <option value="">Standard Room</option>
-                                <option value="">Deluxe Room</option>
-                                <option value="">Single Bed</option>
-                                <option value="">Double Bed</option>
-                                <option value="">Suite</option>
-                                <option value="">Honeymoon Suite</option>
-                                <option value="">Penthouse Suite</option>
-                            </select>
+                            <i class="fa fa-calendar p-2" aria-hidden="true" style="color: red;"></i>
+                            <input type="text" class="input" id="checkOut" placeholder="checkOutDate" onfocus="(this.type='Date')"">
                         </div>
-                    </div>
-                    <span style="margin: 8px;">Please Choose The Services You Want : </span>
-                    <div class="customCheckBoxHolder">
-                        <input class="customCheckBoxInput" id="cCB1" type="checkbox">
-                        <label class="customCheckBoxWrapper" for="cCB1">
-                            <div class="customCheckBox">
-                                <div class="inner">POOL</div>
-                            </div>
-                        </label>
+    
                     
-                        <input class="customCheckBoxInput" id="cCB2" type="checkbox">
-                        <label class="customCheckBoxWrapper" for="cCB2">
-                            <div class="customCheckBox">
-                                <div class="inner">Old-Fashioned Rooms</div>
-                            </div>
-                        </label>
-                    
-                        <input class="customCheckBoxInput" id="cCB3" type="checkbox">
-                        <label class="customCheckBoxWrapper" for="cCB3">
-                            <div class="customCheckBox">
-                                <div class="inner">luxury-Rooms</div>
-                            </div>
-                        </label>
-    
-                        <input class="customCheckBoxInput" id="cCB4" type="checkbox">
-                        <label class="customCheckBoxWrapper" for="cCB4">
-                            <div class="customCheckBox">
-                                <div class="inner">GYM</div>
-                            </div>
-                        </label>
-    
-                        <input class="customCheckBoxInput" id="cCB5" type="checkbox">
-                        <label class="customCheckBoxWrapper" for="cCB5">
-                            <div class="customCheckBox">
-                                <div class="inner">SPA</div>
-                            </div>
-                        </label>
-    
-                        <input class="customCheckBoxInput" id="cCB6" type="checkbox">
-                        <label class="customCheckBoxWrapper" for="cCB6">
-                            <div class="customCheckBox">
-                                <div class="inner">GOLF</div>
-                            </div>
-                        </label>
-    
-                        <input class="customCheckBoxInput" id="cCB7" type="checkbox">
-                        <label class="customCheckBoxWrapper" for="cCB7">
-                            <div class="customCheckBox">
-                                <div class="inner">BOATS</div>
-                            </div>
-                        </label>
-    
-                        <input class="customCheckBoxInput" id="cCB8" type="checkbox">
-                        <label class="customCheckBoxWrapper" for="cCB8">
-                            <div class="customCheckBox">
-                                <div class="inner">RESTAURANTS</div>
-                            </div>
-                        </label>
                     </div>
-                    <a href="../imgs/Bill.jpg" target="_blank">
-                        <button type="button" class="btn btn-primary">Reserve Now</button>
-                    </a>
-                    <a href="Checkout.html" target="_blank">
-                        <button type="button" class="btn btn-primary">Pay with card</button>
-                    </a>
+                    <span style="margin: 8px;">Total Price is  : </span>
+                    
+                   
+                   
+                   
+                   
+                    <br><br>
+                   
+                        <button type="button" class="btn btn-primary" id="formforbookin">Booking Now</button>
+                  
+
                  </div>
             </div>
     <script src="../js/all.min.js"></script>
     <script src="../js/bootstrap.bundle.min.js"></script>
+    <script>
+        document
+          .getElementById("formforbookin")
+          .addEventListener("click", async function (event) {
+            event.preventDefault(); // Prevent default form submission
+  
+            // Gather form data
+            const formData = {
+              userId: document.getElementById("userId").value,
+              checkInDate: document.getElementById("checkIn").value,
+              checkOutDate: document.getElementById('checkOut').value,
+              totalPrice: 5000
+            };
+
+        
+  
+            try {
+              // Send POST request to the API
+              alert("sending.....");
+              const response = await axios.post(
+                `http://localhost:4455/api/v1/booking/hotels/6767dde2c2db63e4fb414840/bookings`,
+                formData
+              );
+              alert(response.data.message); // Notify user of success
+            } catch (error) {
+            //   console.error(error.response.data);
+              alert("Registration failed: " + error.response.data.message); // Notify user of error
+            }
+          });
+      </script>
     </body>
     </html>

@@ -30,6 +30,6 @@ router.put("/:id", authenticateToken, authorizeAdmin, updateHotelById); // PUT a
 router.delete("/:id", authenticateToken, authorizeAdmin, deleteHotelById); // DELETE api/v1/hotels/:id
 
 // Protected route to find hotels by name for logged-in users
-router.get("/search", authenticateToken, findHotelByName); // GET api/v1/hotels/search?name=<hotel-name>
+router.post("/search", authenticateToken, findHotelByName); // GET api/v1/hotels/search?name=<hotel-name>
 
 export default router;

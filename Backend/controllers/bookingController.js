@@ -7,8 +7,8 @@ export const createBooking = async (req, res) => {
   const bookingSchema = Joi.object({
     userId: Joi.string().required(),
     // hotelId will be taken from the route parameter
-    checkInDate: Joi.date().iso().required(),
-    checkOutDate: Joi.date().iso().greater(Joi.ref("checkInDate")).required(),
+    checkInDate: Joi.date().required(),
+    checkOutDate: Joi.date().greater(Joi.ref("checkInDate")).required(),
     totalPrice: Joi.number().min(0).required(),
   });
 
