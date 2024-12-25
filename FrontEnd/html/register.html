@@ -152,7 +152,8 @@
             alert(response.data.message); // Notify user of success
 
             // Save user data to local storage
-            localStorage.setItem("userData", JSON.stringify(formData));
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("userRole", response.data.user.role);
           } catch (error) {
             console.error(error.response.data);
             alert("Registration failed: " + error.response.data.message); // Notify user of error

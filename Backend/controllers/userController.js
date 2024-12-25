@@ -106,7 +106,7 @@ const login = async (req, res) => {
       }
     );
 
-    const userResponse = _.pick(user, ["_id", "name"]);
+    const userResponse = _.pick(user, ["_id", "name", "role"]);
 
     // Send the JWT in the response
     res.status(200).json({

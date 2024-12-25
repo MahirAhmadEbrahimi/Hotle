@@ -83,6 +83,7 @@
     <!-- End-Landing -->
 
     <!-- Features  -->
+    <!-- Features  -->
     <div class="features text-center pt-5 pb-5">
       <div class="container">
         <div class="main-title mt-5 mb-5 position-relative">
@@ -91,53 +92,67 @@
           <p class="text-black-50 text-uppercase">hello in your second house</p>
 
           <div class="row" style="margin-top: -30px">
-            <div class="col-md-6 col-lg-4">
-              <div class="feat">
-                <div class="icon-holder position-relative">
-                  <i
-                    class="fa-solid fa-wifi fa-4x position-absolute bottom-0 icon"
-                  ></i>
+            <div class="container">
+              <!-- Admin Section -->
+              <div id="adminSection" style="display: none">
+                <div class="main-title mt-5 mb-5">
+                  <h2>Add New Hotel</h2>
+                  <p class="text-black-50 text-uppercase">
+                    Enter the details of the new hotel
+                  </p>
                 </div>
-                <h4 class="mb-3 mt-3 text-uppercase">Wi-Fi</h4>
-                <p class="text-black-50 lh-lg">
-                  Wi-Fi service for all our guests at the hotel.
-                </p>
+                <form id="addHotelForm" class="hotel-form">
+                  <div class="form-group">
+                    <label for="hotelName">Hotel Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="hotelName"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="location">Location</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="location"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="roomsAvailable">Rooms Available</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="roomsAvailable"
+                      min="0"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="pricePerNight">Price Per Night</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="pricePerNight"
+                      min="0"
+                      step="0.01"
+                      required
+                    />
+                  </div>
+                  <button type="submit" class="btn btn-primary mt-3">
+                    Add New Hotel
+                  </button>
+                </form>
               </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-              <div class="feat">
-                <div class="icon-holder position-relative">
-                  <i
-                    class="fa-solid fa-dumbbell fa-4x position-absolute bottom-0 icon"
-                  ></i>
-                </div>
-                <h4 class="mb-3 mt-3 text-uppercase">Gym</h4>
-                <p class="text-black-50 lh-lg">
-                  Providing our guests with a comprehensive fitness experience.
-                  Our gym is equipped with a wide range of modern exercise
-                  machines and equipment.
-                </p>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-              <div class="feat">
-                <div class="icon-holder position-relative">
-                  <i
-                    class="fa-solid fa-broom fa-4x position-absolute bottom-0 icon"
-                  ></i>
-                </div>
-                <h4 class="mb-3 mt-3 text-uppercase">Housekeeping</h4>
-                <p class="text-black-50 lh-lg">
-                  Services at our hotel are dedicated to ensuring a comfortable
-                  and tidy stay for our guests. Our professional housekeeping
-                  team meticulously cleans and maintains rooms.
-                </p>
-              </div>
+              <!-- End Admin Section -->
             </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- End-Features  -->
     <!-- End-Features  -->
 
     <!-- our-services  -->
@@ -497,5 +512,63 @@
     <!-- end - footer -->
     <script src="js/all.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      // Check user role and display the admin section if the user is admin
+      const userRole = localStorage.getItem("userRole"); // Assuming userRole is stored in localStorage
+      if (userRole === "admin") {
+        document.getElementById("adminSection").style.display = "block";
+      } else {
+        document.getElementById("adminSection").style.display = "none";
+      }
+
+      // Function to handle adding a new hotel
+      async function addNewHotel(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Gather form data
+        const hotelName = document.getElementById("hotelName").value;
+        const location = document.getElementById("location").value;
+        const roomsAvailable = parseInt(
+          document.getElementById("roomsAvailable").value,
+          10
+        );
+        const pricePerNight = parseFloat(
+          document.getElementById("pricePerNight").value
+        );
+
+        const hotelData = {
+          name: hotelName,
+          location: location,
+          roomsAvailable: roomsAvailable,
+          pricePerNight: pricePerNight,
+        };
+
+        try {
+          const token = localStorage.getItem("token"); // Assuming you have a token for auth
+          const response = await axios.post(
+            "http://localhost:4455/api/v1/hotels",
+            hotelData,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`, // Include token in the request
+              },
+            }
+          );
+
+          console.log("Hotel added successfully:", response.data);
+          alert("New hotel added successfully!");
+          document.getElementById("addHotelForm").reset(); // Reset the form after submission
+        } catch (error) {
+          console.error("Error adding hotel:", error);
+          alert("Failed to add hotel. Please try again.");
+        }
+      }
+
+      // Add event listener to the form
+      document
+        .getElementById("addHotelForm")
+        .addEventListener("submit", addNewHotel);
+    </script>
   </body>
 </html>
