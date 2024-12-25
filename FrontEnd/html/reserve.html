@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Resort Booking Form</title>
@@ -11,144 +11,247 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Open+Sans:wght@400;700&family=Roboto:wght@100;300;500&family=Work+Sans:wght@200;300;400;500;600;700;800&display=swap"
-        rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Open+Sans:wght@400;700&family=Roboto:wght@100;300;500&family=Work+Sans:wght@200;300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
     />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
-        .btn-primary {
-            background: transparent;
-            margin-top: 20px;
-            width: 150px;
-            color: white;
-            font-weight: bold;
-            border: red;
-            background-color: red;
-            cursor: pointer;
-        }
+      .btn-primary {
+        background: transparent;
+        margin-top: 20px;
+        width: 150px;
+        color: white;
+        font-weight: bold;
+        border: red;
+        background-color: red;
+        cursor: pointer;
+      }
 
-        .btn-primary:hover {
-            background-color: darkred;
-        }
+      .btn-primary:hover {
+        background-color: darkred;
+      }
 
-        .btn-primary:active {
-            background-color: darkred;
-        }
+      .btn-primary:active {
+        background-color: darkred;
+      }
 
-        .input-group input::placeholder {
-            color: #333;
-        }
+      .input-group input::placeholder {
+        color: #333;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="../imgs/logo.png" alt="" />
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main" aria-controls="main" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="main">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link p-2 p-lg-3 active" aria-current="page" href="../index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link p-2 p-lg-3" href="../index.html#services">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link p-2 p-lg-3" href="#">Reserve Rooms</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link p-2 p-lg-3" href="../index.html#about">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link p-2 p-lg-3" href="../index.html#contact">Contact</a>
-                    </li>
-                </ul>
-                <a class="btn rounded-pill main-btn" href="login.html">Login</a>
-            </div>
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="../imgs/logo.png" alt="" />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#main"
+          aria-controls="main"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="main">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a
+                class="nav-link p-2 p-lg-3 active"
+                aria-current="page"
+                href="../index.html"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link p-2 p-lg-3" href="../index.html#services"
+                >Services</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link p-2 p-lg-3" href="#">Reserve Rooms</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link p-2 p-lg-3" href="../index.html#about"
+                >About</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link p-2 p-lg-3" href="../index.html#contact"
+                >Contact</a
+              >
+            </li>
+          </ul>
+          <a class="btn rounded-pill main-btn" href="login.html">Login</a>
         </div>
+      </div>
     </nav>
 
     <div class="container">
-        <div id="form-container">
-            <h1 class="text-white text-center">BOOKING HOTEL</h1>
+      <div id="form-container">
+        <h1 class="text-white text-center">BOOKING HOTEL</h1>
 
-            <div class="form-group">
-                <div class="input-group">
-                    <i class="fa fa-hotel p-2" style="color: red" aria-hidden="true"></i>
-                    <select class="input" id="hotelname">
-                        <option value="">Select Hotel</option>
-                        <!-- Options will be populated dynamically -->
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="input-group">
-                    <i class="fa fa-calendar p-2" aria-hidden="true" style="color: red"></i>
-                    <input type="text" class="input" id="checkIn" placeholder="Check-In Date" onfocus="(this.type='date')" />
-                </div>
-                <div class="input-group">
-                    <i class="fa fa-calendar p-2" aria-hidden="true" style="color: red"></i>
-                    <input type="text" class="input" id="checkOut" placeholder="Check-Out Date" onfocus="(this.type='date')" />
-                </div>
-            </div>
-            <span style="margin: 8px">Total Price is: <b style="color: red">5000</b></span>
-
-            <br /><br />
-            <button type="button" class="btn btn-primary" id="formforbooking">Booking Now</button>
+        <div class="form-group">
+          <div class="input-group">
+            <i
+              class="fa fa-hotel p-2"
+              style="color: red"
+              aria-hidden="true"
+            ></i>
+            <select class="input" id="hotelname">
+              <option value="">Select Hotel</option>
+              <!-- Options will be populated dynamically -->
+            </select>
+          </div>
         </div>
+
+        <div class="form-group">
+          <div class="input-group">
+            <i
+              class="fa fa-calendar p-2"
+              aria-hidden="true"
+              style="color: red"
+            ></i>
+            <input
+              type="text"
+              class="input"
+              id="checkIn"
+              placeholder="Check-In Date"
+              onfocus="(this.type='date')"
+            />
+          </div>
+          <div class="input-group">
+            <i
+              class="fa fa-calendar p-2"
+              aria-hidden="true"
+              style="color: red"
+            ></i>
+            <input
+              type="text"
+              class="input"
+              id="checkOut"
+              placeholder="Check-Out Date"
+              onfocus="(this.type='date')"
+            />
+          </div>
+        </div>
+        <span style="margin: 8px"
+          >Total Price is: <b style="color: red">5000</b></span
+        >
+
+        <br /><br />
+        <button type="button" class="btn btn-primary" id="formforbooking">
+          Booking Now
+        </button>
+      </div>
     </div>
 
     <script src="../js/all.min.js"></script>
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script>
-        // Configure Axios for requests with credentials (cookies)
-        axios.defaults.withCredentials = true;
+      // Configure Axios for requests with credentials (cookies)
+      axios.defaults.withCredentials = true;
 
-        // Function to fetch hotels and populate the dropdown
-        async function fetchHotels() {
-            try {
-                const token = localStorage.getItem("token"); // Get the token from local storage
-                if (!token) {
-                    throw new Error("No authentication token found.");
-                }
+      // Function to fetch hotels and populate the dropdown
+      async function fetchHotels() {
+        try {
+          const token = localStorage.getItem("token"); // Get the token from local storage
+          if (!token) {
+            throw new Error("No authentication token found.");
+          }
 
-                const response = await axios.get("http://localhost:4455/api/v1/hotels", {
-                    headers: {
-                        Authorization: `Bearer ${token}`, // Include token in the request
-                    },
-                });
-
-                const hotels = response.data.hotels;
-
-                const hotelSelect = document.getElementById("hotelname");
-                hotels.forEach((hotel) => {
-                    const option = document.createElement("option");
-                    option.value = hotel._id; // Use hotel ID as the value
-                    option.textContent = hotel.name; // Display hotel name
-                    hotelSelect.appendChild(option);
-                });
-
-                // Load previous booking data from local storage if available
-                const savedBooking = JSON.parse(localStorage.getItem("bookingData"));
-                if (savedBooking) {
-                    document.getElementById("hotelname").value = savedBooking.hotelId || "";
-                    document.getElementById("checkIn").value = savedBooking.checkInDate || "";
-                    document.getElementById("checkOut").value = savedBooking.checkOutDate || "";
-                }
-            } catch (error) {
-                console.error("Error fetching hotels:", error.message);
-                alert("Failed to fetch hotels. Please ensure you are logged in and try again.");
+          const response = await axios.get(
+            "http://localhost:4455/api/v1/hotels",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`, // Include token in the request
+              },
             }
+          );
+
+          const hotels = response.data.hotels;
+
+          const hotelSelect = document.getElementById("hotelname");
+          hotels.forEach((hotel) => {
+            const option = document.createElement("option");
+            option.value = hotel._id; // Use hotel ID as the value
+            option.textContent = hotel.name; // Display hotel name
+            hotelSelect.appendChild(option);
+          });
+
+          // Load previous booking data from local storage if available
+          const savedBooking = JSON.parse(localStorage.getItem("bookingData"));
+          if (savedBooking) {
+            document.getElementById("hotelname").value =
+              savedBooking.hotelId || "";
+            document.getElementById("checkIn").value =
+              savedBooking.checkInDate || "";
+            document.getElementById("checkOut").value =
+              savedBooking.checkOutDate || "";
+          }
+        } catch (error) {
+          console.error("Error fetching hotels:", error.message);
+          alert(
+            "Failed to fetch hotels. Please ensure you are logged in and try again."
+          );
+        }
+      }
+
+      // Function to handle booking
+      async function handleBooking() {
+        const hotelSelect = document.getElementById("hotelname");
+        const hotelId = hotelSelect.value;
+        const hotelName = hotelSelect.options[hotelSelect.selectedIndex].text; // Get the selected hotel name
+        const checkInDate = document.getElementById("checkIn").value;
+        const checkOutDate = document.getElementById("checkOut").value;
+        const totalPrice = 5000; // Example fixed price; adjust as needed
+
+        if (!hotelId || !checkInDate || !checkOutDate) {
+          alert("Please fill in all fields.");
+          return;
         }
 
-        // Call the function to fetch hotels when the page loads
-        window.onload = fetchHotels;
+        const bookingData = {
+          hotelName: hotelName, // Use the hotel name from the selected option
+          checkInDate,
+          checkOutDate,
+          totalPrice,
+        };
+
+        try {
+          const token = localStorage.getItem("token");
+          const response = await axios.post(
+            "http://localhost:4455/api/v1/booking/hotels/bookings",
+            bookingData,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          console.log("Booking successful:", response.data);
+          alert("Booking successful!");
+          // Optionally, save booking data to local storage
+          localStorage.setItem("bookingData", JSON.stringify(bookingData));
+        } catch (error) {
+          console.error("Error creating booking:", error);
+          alert("Failed to create booking. Please try again.");
+        }
+      }
+
+      // Call the function to fetch hotels when the page loads
+      window.onload = fetchHotels;
+
+      // Add event listener for booking button
+      document
+        .getElementById("formforbooking")
+        .addEventListener("click", handleBooking);
     </script>
-</body>
+  </body>
 </html>
