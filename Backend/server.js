@@ -7,11 +7,18 @@ import user from "./routes/userRoute.js";
 import hotel from "./routes/hotelRoute.js";
 import booking from "./routes/bookingRoute.js";
 const app = express();
-
-app.use(cors());
 app.use(cookieParser());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Use the CORS middleware with options
+app.use(
+  cors({
+    origin: ["http://localhost:5500", "http://127.0.0.1:5500"], // Allow both origins
+    credentials: true,
+  })
+);
 // Connect to MongoDB
 mongoose
   .connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })

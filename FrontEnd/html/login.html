@@ -147,6 +147,20 @@
     <script src="../js/all.min.js"></script>
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script>
+      // Create an Axios instance
+      const api = axios.create({
+        baseURL: "http://localhost:4455/api/v1", // Base URL of your API
+      });
+
+      // Add a request interceptor to include the token in headers
+      api.interceptors.request.use((config) => {
+        const token = localStorage.getItem("token");
+        if (token) {
+          config.headers["Authorization"] = `Bearer ${token}`;
+        }
+        return config;
+      });
+
       document
         .getElementById("loginButton")
         .addEventListener("click", async function (event) {
@@ -160,20 +174,31 @@
 
           try {
             // Send POST request to the API
-            const response = await axios.post(
-              "http://localhost:4455/api/v1/users/login",
-              userData
-            );
+            const response = await api.post("/users/login", userData);
+
             console.log(response.data); // Handle success response
             alert(response.data.message); // Notify user of success
 
+            localStorage.setItem("token", response.data.token);
             // Redirect to the home page
             window.location.href = "../index.html"; // Change this to your home page URL
           } catch (error) {
-            console.error(error.response.data);
-            alert("Login failed: " + error.response.data.message); // Notify user of error
+            alert(
+              "Login failed: " +
+                (error.response ? error.response.data.message : error.message)
+            ); // Notify user of error
           }
         });
+
+      // Example function to fetch protected data
+      async function fetchProtectedData() {
+        try {
+          const response = await api.get("/hotels/search"); // Example protected route
+          console.log(response.data);
+        } catch (error) {
+          console.error("Error fetching protected data:", error);
+        }
+      }
     </script>
   </body>
 </html>

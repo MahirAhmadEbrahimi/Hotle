@@ -6,8 +6,6 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv/config";
 
 const register = async (req, res) => {
-  console.log("Entering registration...");
-
   const validSchema = Joi.object({
     name: Joi.string().min(3).max(40).required().messages({
       "string.min": "Name must be at least 3 characters long.",
@@ -53,14 +51,11 @@ const register = async (req, res) => {
       }
     );
 
-    // Set JWT as a cookie
-    res.cookie("token", token, {
-      httpOnly: true,
-    });
-
+    // Send the JWT in the response
     res.status(201).json({
       user: userResponse,
-      message: userResponse.name + " registerd successfuly",
+      token: token, // Include the token in the response
+      message: userResponse.name + " registered successfully",
     });
   } catch (error) {
     console.error("Error saving user:", error);
@@ -111,22 +106,19 @@ const login = async (req, res) => {
       }
     );
 
-    // Set JWT as a cookie
-    res.cookie("token", token, {
-      httpOnly: true,
-    });
-
     const userResponse = _.pick(user, ["_id", "name"]);
+
+    // Send the JWT in the response
     res.status(200).json({
       user: userResponse,
-      message: userResponse.name + "login Successfuly",
+      token: token, // Include the token in the response
+      message: userResponse.name + " logged in successfully",
     });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.find();

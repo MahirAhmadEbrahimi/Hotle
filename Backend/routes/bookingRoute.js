@@ -9,7 +9,7 @@ import { authenticateToken } from "../middleware/authMiddleware.js"; // Import m
 const router = express.Router();
 
 // Route for creating a new booking associated with a specific hotel
-router.post("/hotels/:id/bookings", authenticateToken, createBooking);
+router.post("/hotels/bookings", authenticateToken, createBooking);
 router.get("/users/bookings", authenticateToken, getUserBookings);
 router.delete("/users/bookings/:id", authenticateToken, deleteUserBookings); // Changed to DELETE
 

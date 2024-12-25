@@ -1,12 +1,41 @@
 import Booking from "../models/bookingModel.js"; // Import the Booking model
 import Joi from "joi";
 import _ from "lodash"; // Import Lodash
+import axios from "axios"; // Import Axios
 
+// Function to search for hotels by name
+const searchHotels = async (req, d) => {
+  try {
+    // Extract the token from the request headers
+    const token = req.headers.authorization?.split(" ")[1]; // Get the token (Bearer token)
+
+    if (!token) {
+      throw new Error("Authorization token is missing.");
+    }
+
+    const response = await axios.post(
+      "http://localhost:4455/api/v1/hotels/findHotle", // Corrected the endpoint
+      {
+        hotelName: d, // Use the parameter d directly
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    console.log("Hotel search response:", response.data);
+    return response.data; // Return the response data
+  } catch (error) {
+    console.error("Error searching for hotels:", error.message);
+    throw new Error("Failed to search for hotels.");
+  }
+};
 // Create a new booking
 export const createBooking = async (req, res) => {
   const bookingSchema = Joi.object({
-    userId: Joi.string().required(),
-    // hotelId will be taken from the route parameter
+    hotelName: Joi.string().required(), // Expect hotel name in the request body
     checkInDate: Joi.date().required(),
     checkOutDate: Joi.date().greater(Joi.ref("checkInDate")).required(),
     totalPrice: Joi.number().min(0).required(),
@@ -19,13 +48,22 @@ export const createBooking = async (req, res) => {
   }
 
   try {
-    const { userId } = req.body; // Extract userId from request body
-    const hotelId = req.params.id; // Extract hotelId from route parameters
-    const { checkInDate, checkOutDate, totalPrice } = req.body;
+    const { hotelName, checkInDate, checkOutDate, totalPrice } = req.body; // Extract data from request body
+
+    const hotels = await searchHotels(req, hotelName);
+
+    if (!hotels || hotels.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No hotel found with the given name." });
+    }
+
+    const hotelId = hotels._id; // Take the first matched hotel ID
+    const userId = req.user.id;
 
     const newBooking = new Booking({
-      userId,
       hotelId,
+      userId,
       checkInDate,
       checkOutDate,
       totalPrice,
@@ -36,7 +74,6 @@ export const createBooking = async (req, res) => {
     // Use Lodash to pick specific fields
     const response = _.pick(savedBooking.toObject(), [
       "_id",
-      "userId",
       "hotelId",
       "checkInDate",
       "checkOutDate",
@@ -48,7 +85,6 @@ export const createBooking = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 // Get all bookings for logged-in user
 export const getUserBookings = async (req, res) => {
   const userId = req.user.id;

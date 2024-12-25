@@ -1,7 +1,9 @@
 import jwt from "jsonwebtoken";
 
 export const authenticateToken = (req, res, next) => {
-  const token = req.cookies.token;
+  // Get token from the Authorization header
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1]; // Extract token from "Bearer TOKEN"
 
   if (!token) {
     return res.status(401).json({ error: "Access token required" });

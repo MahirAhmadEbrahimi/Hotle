@@ -6,6 +6,7 @@ import {
   updateHotelById,
   deleteHotelById,
   findHotelByName,
+  getHotelByTitle,
 } from "../controllers/hotelController.js";
 import {
   authenticateToken,
@@ -15,21 +16,22 @@ import {
 const router = express.Router();
 
 // Route to register a new hotel
-router.post("/", authenticateToken, authorizeAdmin, registerHotel); // POST api/v1/hotels
+router.post("/", authenticateToken, authorizeAdmin, registerHotel);
 
 // Protected route to get all hotels
-router.get("/", authenticateToken, authorizeAdmin, getAllHotels); // GET api/v1/hotels
+router.get("/", authenticateToken, authorizeAdmin, getAllHotels);
 
 // Protected route to get a specific hotel by ID
-router.get("/:id", authenticateToken, authorizeAdmin, getHotelById); // GET api/v1/hotels/:id
+router.get("/:id", authenticateToken, authorizeAdmin, getHotelById);
 
 // Protected route to update a specific hotel by ID
-router.put("/:id", authenticateToken, authorizeAdmin, updateHotelById); // PUT api/v1/hotels/:id
+router.put("/:id", authenticateToken, authorizeAdmin, updateHotelById);
 
 // Protected route to delete a specific hotel by ID
-router.delete("/:id", authenticateToken, authorizeAdmin, deleteHotelById); // DELETE api/v1/hotels/:id
+router.delete("/:id", authenticateToken, authorizeAdmin, deleteHotelById);
 
 // Protected route to find hotels by name for logged-in users
-router.post("/search", authenticateToken, findHotelByName); // GET api/v1/hotels/search?name=<hotel-name>
+router.post("/search", authenticateToken, findHotelByName);
+router.post("/findHotle", authenticateToken, getHotelByTitle);
 
 export default router;

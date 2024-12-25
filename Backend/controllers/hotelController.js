@@ -212,3 +212,29 @@ export const findHotelByName = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+//  GET BY TITLE ON HOTLE
+export const getHotelByTitle = async (req, res) => {
+  const { hotelName } = req.body; // Corrected variable name
+
+  try {
+    const hotel = await Hotel.findOne({
+      name: hotelName, // Use the corrected hotelName variable
+    });
+    if (!hotel) {
+      return res.status(404).json({ error: "Hotel not found" });
+    }
+
+    const hotelResponse = _.pick(hotel, [
+      "_id",
+      "name",
+      "location",
+      "roomsAvailable",
+      "pricePerNight",
+    ]);
+    res.status(200).json(hotelResponse); // Return the hotel response
+  } catch (error) {
+    console.error("Error fetching hotel:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
