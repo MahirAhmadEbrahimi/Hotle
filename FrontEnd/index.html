@@ -43,7 +43,7 @@
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link p-2 p-lg-3" href="#services">Services</a>
+              <a class="nav-link p-2 p-lg-3" href="#services">HOTEL</a>
             </li>
             <li class="nav-item">
               <a class="nav-link p-2 p-lg-3" href="html/reserve.html"
@@ -82,81 +82,8 @@
     </div>
     <!-- End-Landing -->
 
-    <!-- Features  -->
-    <!-- Features  -->
-    <div class="features text-center pt-5 pb-5">
-      <div class="container">
-        <div class="main-title mt-5 mb-5 position-relative">
-          <img class="mb-4" src="imgs/title.png" alt="" />
-          <h2>HOTEL</h2>
-          <p class="text-black-50 text-uppercase">hello in your second house</p>
-
-          <div class="row" style="margin-top: -30px">
-            <div class="container">
-              <!-- Admin Section -->
-              <div id="adminSection" style="display: none">
-                <div class="main-title mt-5 mb-5">
-                  <h2>Add New Hotel</h2>
-                  <p class="text-black-50 text-uppercase">
-                    Enter the details of the new hotel
-                  </p>
-                </div>
-                <form id="addHotelForm" class="hotel-form">
-                  <div class="form-group">
-                    <label for="hotelName">Hotel Name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="hotelName"
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="location">Location</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="location"
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="roomsAvailable">Rooms Available</label>
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="roomsAvailable"
-                      min="0"
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="pricePerNight">Price Per Night</label>
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="pricePerNight"
-                      min="0"
-                      step="0.01"
-                      required
-                    />
-                  </div>
-                  <button type="submit" class="btn btn-primary mt-3">
-                    Add New Hotel
-                  </button>
-                </form>
-              </div>
-              <!-- End Admin Section -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End-Features  -->
-    <!-- End-Features  -->
-
     <!-- our-services  -->
-    <div class="our-work text-center pt-5 pb-5" id="services">
+    <div class="our-work text-center pt-5 pb-5">
       <div class="container">
         <div class="main-title mt-5 mb-5 position-relative">
           <img class="mb-4" src="imgs/title.png" alt="" />
@@ -237,6 +164,70 @@
       </div>
     </div>
     <!-- End-our-services  -->
+    <!-- Features  -->
+    <!-- Features  -->
+    <div
+      class="features text-center pt-5 pb-5"
+      id="services"
+      style="background-color: aqua"
+    >
+      <div class="container">
+        <div class="main-title mt-5 mb-5 position-relative">
+          <img class="mb-4" src="imgs/title.png" alt="" />
+          <h2>HOTEL</h2>
+          <p class="text-black-50 text-uppercase">hello in your second house</p>
+
+          <div class="row" style="margin-top: -30px">
+            <div class="container">
+              <!-- Admin Section -->
+              <div id="adminSection" style="display: none">
+                <div class="main-title mt-5 mb-5">
+                  <h2>Add New Hotel</h2>
+                  <p class="text-black-50 text-uppercase">
+                    Enter the details of the new hotel
+                  </p>
+                </div>
+                <form id="addHotelForm" class="hotel-form">
+                  <div class="form-group">
+                    <label for="hotelName">Hotel Name</label>
+                    <input type="text" class="form-control" id="hotelName" />
+                  </div>
+                  <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" class="form-control" id="location" />
+                  </div>
+                  <div class="form-group">
+                    <label for="roomsAvailable">Rooms Available</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="roomsAvailable"
+                      min="0"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="pricePerNight">Price Per Night</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="pricePerNight"
+                      min="0"
+                      step="0.01"
+                    />
+                  </div>
+                  <button type="submit" class="btn btn-primary mt-3">
+                    Add New Hotel
+                  </button>
+                </form>
+              </div>
+              <!-- End Admin Section -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End-Features  -->
+    <!-- End-Features  -->
 
     <!-- staff  -->
     <div class="stuff pt-5" id="about">
@@ -561,7 +552,9 @@
           document.getElementById("addHotelForm").reset(); // Reset the form after submission
         } catch (error) {
           console.error("Error adding hotel:", error);
-          alert("Failed to add hotel. Please try again.");
+          alert(
+            "Failed to add hotel. Please try again." + error.response.data.error
+          );
         }
       }
 
