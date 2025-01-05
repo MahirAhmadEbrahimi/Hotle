@@ -13,6 +13,35 @@
       href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Open+Sans:wght@400;700&family=Roboto:wght@100;300;500&family=Work+Sans:wght@200;300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <style>
+      .booking-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .booking-table th,
+      .booking-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .booking-table th {
+        background-color: #f2f2f2;
+        color: #333;
+      }
+
+      .booking-table tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      .booking-table td {
+        color: #555;
+      }
+    </style>
   </head>
   <body>
     <!-- Navbar -->
@@ -43,7 +72,7 @@
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link p-2 p-lg-3" href="#services">HOTEL</a>
+              <a class="nav-link p-2 p-lg-3" href="#services">Hotle</a>
             </li>
             <li class="nav-item">
               <a class="nav-link p-2 p-lg-3" href="html/reserve.html"
@@ -232,13 +261,23 @@
     <!-- staff  -->
     <div class="stuff pt-5" id="about">
       <div class="container">
-        <div class="main-title text-center mt-5 mb-5 position-relative">
-          <img class="mb-4" src="imgs/title.png" alt="" />
-          <h2>Some Stuff About Us</h2>
-          <p class="text-black-50 text-uppercase">The Great Team</p>
+        <div id="booking-info" class="text-center">
+          <table class="booking-table">
+            <thead>
+              <tr>
+                <th>Hotel Name</th>
+                <th>Location</th>
+                <th>Total Price</th>
+              </tr>
+            </thead>
+            <tbody id="booking-body">
+              <!-- Booking details will be inserted here -->
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
+
     <!-- end-staff  -->
 
     <!-- our team  -->
@@ -501,6 +540,7 @@
       </div>
     </div>
     <!-- end - footer -->
+
     <script src="js/all.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -562,6 +602,44 @@
       document
         .getElementById("addHotelForm")
         .addEventListener("submit", addNewHotel);
+
+      //  FOR SHOING BOOKING AND DELETING BOOKING OF LOGIN USER
+      async function fetchBookings() {
+        try {
+          const token = localStorage.getItem("token");
+          const response = await axios.get(
+            "http://localhost:4455/api/v1/booking/users/bookings",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`, // Include token in the request
+              },
+            }
+          );
+          console.log(response.data.bookings);
+          displayBookings(response.data.bookings);
+        } catch (error) {
+          console.error("Error fetching bookings:", error);
+        }
+      }
+
+      // Function to display booking information in a table
+      function displayBookings(bookings) {
+        const bookingBody = document.getElementById("booking-body");
+        bookings.forEach((booking) => {
+          const hotel = booking.hotelId;
+          const totalPrice = booking.totalPrice;
+          const bookingRow = document.createElement("tr");
+          bookingRow.innerHTML = `
+                <td>${hotel.name}</td>
+                <td>${hotel.location}</td>
+                <td>$${totalPrice}</td>
+            `;
+          bookingBody.appendChild(bookingRow);
+        });
+      }
+
+      // Call the fetch function on page load
+      fetchBookings();
     </script>
   </body>
 </html>

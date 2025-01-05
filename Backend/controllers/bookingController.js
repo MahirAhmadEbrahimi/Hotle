@@ -59,14 +59,18 @@ export const createBooking = async (req, res) => {
     }
 
     const hotelId = hotels._id; // Take the first matched hotel ID
+    const price = hotels.pricePerNight;
     const userId = req.user.id;
+    const totalDays =
+      (new Date(checkOutDate) - new Date(checkInDate)) / (1000 * 60 * 60 * 24);
+    const tatalPrice = totalDays * price;
 
     const newBooking = new Booking({
       hotelId,
       userId,
       checkInDate,
       checkOutDate,
-      totalPrice,
+      totalPrice: tatalPrice,
     });
 
     const savedBooking = await newBooking.save();
